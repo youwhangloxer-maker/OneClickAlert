@@ -4,6 +4,9 @@ on:
   push:
   workflow_dispatch:
 
+permissions:
+  contents: write
+
 jobs:
   build:
     runs-on: ubuntu-24.04
@@ -29,3 +32,14 @@ jobs:
         with:
           name: OneClickAlert-apk
           path: OneClickAlert.apk
+
+      - name: 릴리스에 올리기
+        if: github.ref == 'refs/heads/main'
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          VER=$(grep versionName app/build.gradle | sed "s/.*'\(.*\)'.*/\1/")
+          gh release create "v$VER-${{ github.run_number }}" OneClickAlert.apk \
+            --title "원클릭 알림 $VER (빌드 ${{ github.run_number }})" \
+            --notes "폰에서 OneClickAlert.apk를 눌러 설치하세요." \
+            --latest
