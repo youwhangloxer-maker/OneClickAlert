@@ -1,0 +1,31 @@
+name: APK 빌드
+
+on:
+  push:
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '17'
+
+      - uses: android-actions/setup-android@v3
+
+      - name: APK 만들기
+        run: |
+          chmod +x ./gradlew
+          ./gradlew assembleRelease --no-daemon
+
+      - name: 파일 이름 정리
+        run: cp app/build/outputs/apk/release/app-release.apk OneClickAlert.apk
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: OneClickAlert-apk
+          path: OneClickAlert.apk

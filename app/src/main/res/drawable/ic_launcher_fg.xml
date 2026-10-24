@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- 흰색 종 모양 -->
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="108dp" android:height="108dp"
+    android:viewportWidth="108" android:viewportHeight="108">
+    <path android:fillColor="#FFFFFF"
+        android:pathData="M54,32c-9,0 -15,7 -15,16v10l-5,7v2h40v-2l-5,-7V48c0,-9 -6,-16 -15,-16z" />
+    <path android:fillColor="#FFFFFF"
+        android:pathData="M48,70a6,6 0,0 0,12 0z" />
+</vector>
