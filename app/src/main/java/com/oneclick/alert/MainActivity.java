@@ -44,7 +44,7 @@ public class MainActivity extends Activity {
     private final Handler ui = new Handler(Looper.getMainLooper());
     private SharedPreferences prefs;
 
-    private Button alertBtn, micBtn, permBtn, voicePick, voiceTest;
+    private Button alertBtn, micBtn, permBtn, voicePick, voiceTest, voiceReset;
     private TextView micStatus, permStatus, voiceStatus, volVal;
     private ProgressBar meter;
     private SeekBar vol;
@@ -68,6 +68,7 @@ public class MainActivity extends Activity {
         permBtn = findViewById(R.id.permBtn);
         voicePick = findViewById(R.id.voicePick);
         voiceTest = findViewById(R.id.voiceTest);
+        voiceReset = findViewById(R.id.voiceReset);
         micStatus = findViewById(R.id.micStatus);
         permStatus = findViewById(R.id.permStatus);
         voiceStatus = findViewById(R.id.voiceStatus);
@@ -83,6 +84,7 @@ public class MainActivity extends Activity {
         permBtn.setOnClickListener(v -> openAppSettings());
         voicePick.setOnClickListener(v -> pickVoice());
         voiceTest.setOnClickListener(v -> playVoice());
+        voiceReset.setOnClickListener(v -> resetVoice());
 
         int savedVol = prefs.getInt(KEY_VOLUME, 150);
         vol.setProgress(savedVol);
@@ -213,9 +215,24 @@ public class MainActivity extends Activity {
         }
     }
 
+    /** 직접 고른 파일을 지우고 기본 음성으로 되돌림 */
+    private void resetVoice() {
+        String saved = prefs.getString(KEY_VOICE_URI, null);
+        if (saved != null) {
+            try {
+                getContentResolver().releasePersistableUriPermission(Uri.parse(saved), Intent.FLAG_GRANT_READ_URI_PERMISSION);
+            } catch (Exception ignored) { }
+        }
+        prefs.edit().remove(KEY_VOICE_URI).remove(KEY_VOICE_NAME).apply();
+        refreshVoiceStatus();
+        playVoice();
+    }
+
     private void refreshVoiceStatus() {
         String name = prefs.getString(KEY_VOICE_NAME, null);
-        if (prefs.getString(KEY_VOICE_URI, null) != null) {
+        boolean custom = prefs.getString(KEY_VOICE_URI, null) != null;
+        voiceReset.setVisibility(custom && hasAssetVoice() ? View.VISIBLE : View.GONE);
+        if (custom) {
             setStatus(voiceStatus, "사용 중: " + name, true);
         } else if (hasAssetVoice()) {
             setStatus(voiceStatus, "사용 중: 기본 음성", true);

@@ -200,11 +200,17 @@
                     style="@style/Pill"
                     android:layout_marginStart="10dp"
                     android:text="미리 듣기" />
+                <Button
+                    android:id="@+id/voiceReset"
+                    style="@style/Pill"
+                    android:layout_marginStart="10dp"
+                    android:text="기본 음성"
+                    android:visibility="gone" />
             </LinearLayout>
 
             <TextView
                 style="@style/Note"
-                android:text="고른 파일은 앱에 기억돼서 다음에 열어도 그대로 쓰여요." />
+                android:text="기본으로 '손님이 대기중입니다' 음성이 들어 있어요. mp3를 고르면 그 파일로 바뀌고, '기본 음성'을 누르면 원래대로 돌아가요." />
         </LinearLayout>
     </LinearLayout>
 </ScrollView>
