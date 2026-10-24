@@ -1,216 +1,288 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:fillViewport="true"
     android:fitsSystemWindows="true"
     android:background="@color/bg">
 
+    <!-- 메인 화면: 알림 버튼 + 안내 문구 -->
     <LinearLayout
+        android:id="@+id/mainView"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
+        android:gravity="center"
         android:orientation="vertical"
-        android:padding="16dp">
+        android:padding="24dp">
 
-        <!-- 알림 버튼 -->
-        <FrameLayout
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="1"
-            android:minHeight="320dp">
+        <Button
+            android:id="@+id/alertBtn"
+            android:layout_width="260dp"
+            android:layout_height="260dp"
+            android:background="@drawable/bg_alert"
+            android:elevation="8dp"
+            android:stateListAnimator="@null"
+            android:text="알림"
+            android:textColor="#FFFFFF"
+            android:textSize="32sp"
+            android:textStyle="bold"
+            android:contentDescription="알림 울리기" />
 
-            <Button
-                android:id="@+id/alertBtn"
-                android:layout_width="260dp"
-                android:layout_height="260dp"
-                android:layout_gravity="center"
-                android:background="@drawable/bg_alert"
-                android:elevation="8dp"
-                android:stateListAnimator="@null"
-                android:text="알림"
-                android:textColor="#FFFFFF"
-                android:textSize="32sp"
-                android:textStyle="bold"
-                android:contentDescription="알림 울리기" />
-        </FrameLayout>
+        <TextView
+            android:id="@+id/message"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="40dp"
+            android:gravity="center"
+            android:lineSpacingMultiplier="1.35"
+            android:text="창고 정리중이예요!\n호출하시려면\n알림 버튼을 눌러주세요!"
+            android:textColor="@color/fg"
+            android:textSize="26sp"
+            android:textStyle="bold" />
+    </LinearLayout>
 
-        <!-- 주변 소리 듣기 -->
+    <!-- 우상단 설정 아이콘 -->
+    <ImageButton
+        android:id="@+id/settingsBtn"
+        android:layout_width="52dp"
+        android:layout_height="52dp"
+        android:layout_gravity="top|end"
+        android:layout_margin="8dp"
+        android:background="?android:attr/selectableItemBackgroundBorderless"
+        android:contentDescription="설정"
+        android:padding="12dp"
+        android:scaleType="fitCenter"
+        android:src="@drawable/ic_settings" />
+
+    <!-- 설정 화면 -->
+    <LinearLayout
+        android:id="@+id/settingsView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/bg"
+        android:clickable="true"
+        android:orientation="vertical"
+        android:visibility="gone">
+
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
-            android:background="@drawable/bg_panel"
-            android:orientation="vertical"
-            android:padding="16dp">
+            android:layout_height="60dp"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            android:paddingStart="4dp"
+            android:paddingEnd="16dp">
+
+            <ImageButton
+                android:id="@+id/backBtn"
+                android:layout_width="52dp"
+                android:layout_height="52dp"
+                android:background="?android:attr/selectableItemBackgroundBorderless"
+                android:contentDescription="뒤로"
+                android:padding="14dp"
+                android:scaleType="fitCenter"
+                android:src="@drawable/ic_back" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="4dp"
+                android:text="설정"
+                android:textColor="@color/fg"
+                android:textSize="20sp"
+                android:textStyle="bold" />
+        </LinearLayout>
+
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1">
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:gravity="center_vertical"
-                android:orientation="horizontal">
+                android:orientation="vertical"
+                android:paddingStart="16dp"
+                android:paddingEnd="16dp"
+                android:paddingBottom="24dp">
 
+                <!-- 주변 소리 듣기 -->
                 <LinearLayout
-                    android:layout_width="0dp"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:orientation="vertical">
+                    android:layout_marginTop="4dp"
+                    android:background="@drawable/bg_panel"
+                    android:orientation="vertical"
+                    android:padding="16dp">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center_vertical"
+                        android:orientation="horizontal">
+
+                        <LinearLayout
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:orientation="vertical">
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="주변 소리 듣기"
+                                android:textColor="@color/fg"
+                                android:textSize="17sp"
+                                android:textStyle="bold" />
+                            <TextView
+                                android:id="@+id/micStatus"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="2dp"
+                                android:text="꺼짐"
+                                android:textColor="@color/muted"
+                                android:textSize="13sp" />
+                        </LinearLayout>
+
+                        <Button
+                            android:id="@+id/micBtn"
+                            style="@style/Pill"
+                            android:text="켜기" />
+                    </LinearLayout>
+
+                    <ProgressBar
+                        android:id="@+id/meter"
+                        style="?android:attr/progressBarStyleHorizontal"
+                        android:layout_width="match_parent"
+                        android:layout_height="6dp"
+                        android:layout_marginTop="14dp"
+                        android:max="100"
+                        android:progress="0"
+                        android:progressTint="@color/live"
+                        android:progressBackgroundTint="@color/line" />
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="14dp"
+                        android:orientation="horizontal">
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:text="음량"
+                            android:textColor="@color/muted"
+                            android:textSize="14sp" />
+                        <TextView
+                            android:id="@+id/volVal"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="150%"
+                            android:textColor="@color/muted"
+                            android:textSize="14sp" />
+                    </LinearLayout>
+
+                    <SeekBar
+                        android:id="@+id/vol"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="4dp"
+                        android:max="400"
+                        android:progress="150"
+                        android:progressTint="@color/live"
+                        android:thumbTint="@color/live"
+                        android:contentDescription="음량" />
+
+                    <TextView
+                        style="@style/Note"
+                        android:text="반드시 이어폰을 먼저 연결하세요. 스피커로 들으면 하울링이 생깁니다." />
+                </LinearLayout>
+
+                <!-- 마이크 권한 -->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="16dp"
+                    android:background="@drawable/bg_panel"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal"
+                    android:padding="16dp">
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:orientation="vertical">
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="마이크 권한"
+                            android:textColor="@color/fg"
+                            android:textSize="17sp"
+                            android:textStyle="bold" />
+                        <TextView
+                            android:id="@+id/permStatus"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="2dp"
+                            android:textColor="@color/muted"
+                            android:textSize="13sp" />
+                    </LinearLayout>
+
+                    <Button
+                        android:id="@+id/permBtn"
+                        style="@style/Pill"
+                        android:text="권한 설정" />
+                </LinearLayout>
+
+                <!-- 안내 음성 -->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="16dp"
+                    android:background="@drawable/bg_panel"
+                    android:orientation="vertical"
+                    android:padding="16dp">
+
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="주변 소리 듣기"
+                        android:text="안내 음성"
                         android:textColor="@color/fg"
                         android:textSize="17sp"
                         android:textStyle="bold" />
                     <TextView
-                        android:id="@+id/micStatus"
+                        android:id="@+id/voiceStatus"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="2dp"
-                        android:text="꺼짐"
                         android:textColor="@color/muted"
                         android:textSize="13sp" />
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="12dp"
+                        android:orientation="horizontal">
+                        <Button
+                            android:id="@+id/voicePick"
+                            style="@style/Pill"
+                            android:text="mp3 선택" />
+                        <Button
+                            android:id="@+id/voiceTest"
+                            style="@style/Pill"
+                            android:layout_marginStart="10dp"
+                            android:text="미리 듣기" />
+                        <Button
+                            android:id="@+id/voiceReset"
+                            style="@style/Pill"
+                            android:layout_marginStart="10dp"
+                            android:text="기본 음성"
+                            android:visibility="gone" />
+                    </LinearLayout>
+
+                    <TextView
+                        style="@style/Note"
+                        android:text="기본으로 '손님이 대기중입니다' 음성이 들어 있어요. mp3를 고르면 그 파일로 바뀌고, '기본 음성'을 누르면 원래대로 돌아가요." />
                 </LinearLayout>
-
-                <Button
-                    android:id="@+id/micBtn"
-                    style="@style/Pill"
-                    android:text="켜기" />
             </LinearLayout>
-
-            <ProgressBar
-                android:id="@+id/meter"
-                style="?android:attr/progressBarStyleHorizontal"
-                android:layout_width="match_parent"
-                android:layout_height="6dp"
-                android:layout_marginTop="14dp"
-                android:max="100"
-                android:progress="0"
-                android:progressTint="@color/live"
-                android:progressBackgroundTint="@color/line" />
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="14dp"
-                android:orientation="horizontal">
-                <TextView
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:text="음량"
-                    android:textColor="@color/muted"
-                    android:textSize="14sp" />
-                <TextView
-                    android:id="@+id/volVal"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="150%"
-                    android:textColor="@color/muted"
-                    android:textSize="14sp" />
-            </LinearLayout>
-
-            <SeekBar
-                android:id="@+id/vol"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="4dp"
-                android:max="400"
-                android:progress="150"
-                android:progressTint="@color/live"
-                android:thumbTint="@color/live"
-                android:contentDescription="음량" />
-
-            <TextView
-                style="@style/Note"
-                android:text="반드시 이어폰을 먼저 연결하세요. 스피커로 들으면 하울링이 생깁니다." />
-        </LinearLayout>
-
-        <!-- 마이크 권한 -->
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
-            android:background="@drawable/bg_panel"
-            android:gravity="center_vertical"
-            android:orientation="horizontal"
-            android:padding="16dp">
-
-            <LinearLayout
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:orientation="vertical">
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="마이크 권한"
-                    android:textColor="@color/fg"
-                    android:textSize="17sp"
-                    android:textStyle="bold" />
-                <TextView
-                    android:id="@+id/permStatus"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="2dp"
-                    android:textColor="@color/muted"
-                    android:textSize="13sp" />
-            </LinearLayout>
-
-            <Button
-                android:id="@+id/permBtn"
-                style="@style/Pill"
-                android:text="권한 설정" />
-        </LinearLayout>
-
-        <!-- 안내 음성 -->
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
-            android:background="@drawable/bg_panel"
-            android:orientation="vertical"
-            android:padding="16dp">
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="안내 음성"
-                android:textColor="@color/fg"
-                android:textSize="17sp"
-                android:textStyle="bold" />
-            <TextView
-                android:id="@+id/voiceStatus"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="2dp"
-                android:textColor="@color/muted"
-                android:textSize="13sp" />
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="12dp"
-                android:orientation="horizontal">
-                <Button
-                    android:id="@+id/voicePick"
-                    style="@style/Pill"
-                    android:text="mp3 선택" />
-                <Button
-                    android:id="@+id/voiceTest"
-                    style="@style/Pill"
-                    android:layout_marginStart="10dp"
-                    android:text="미리 듣기" />
-                <Button
-                    android:id="@+id/voiceReset"
-                    style="@style/Pill"
-                    android:layout_marginStart="10dp"
-                    android:text="기본 음성"
-                    android:visibility="gone" />
-            </LinearLayout>
-
-            <TextView
-                style="@style/Note"
-                android:text="기본으로 '손님이 대기중입니다' 음성이 들어 있어요. mp3를 고르면 그 파일로 바뀌고, '기본 음성'을 누르면 원래대로 돌아가요." />
-        </LinearLayout>
+        </ScrollView>
     </LinearLayout>
-</ScrollView>
+</FrameLayout>

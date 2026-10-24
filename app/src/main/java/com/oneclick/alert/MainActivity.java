@@ -47,6 +47,7 @@ public class MainActivity extends Activity {
     private Button alertBtn, micBtn, permBtn, voicePick, voiceTest, voiceReset;
     private TextView micStatus, permStatus, voiceStatus, volVal;
     private ProgressBar meter;
+    private View mainView, settingsView, settingsBtn;
     private SeekBar vol;
 
     private MediaPlayer voicePlayer;
@@ -75,6 +76,12 @@ public class MainActivity extends Activity {
         volVal = findViewById(R.id.volVal);
         meter = findViewById(R.id.meter);
         vol = findViewById(R.id.vol);
+
+        mainView = findViewById(R.id.mainView);
+        settingsView = findViewById(R.id.settingsView);
+        settingsBtn = findViewById(R.id.settingsBtn);
+        settingsBtn.setOnClickListener(v -> showSettings(true));
+        findViewById(R.id.backBtn).setOnClickListener(v -> showSettings(false));
 
         alertBtn.setOnClickListener(v -> playAlert());
         micBtn.setOnClickListener(v -> {
@@ -112,6 +119,22 @@ public class MainActivity extends Activity {
         releaseVoice();
         if (chimeTrack != null) { chimeTrack.release(); chimeTrack = null; }
         super.onDestroy();
+    }
+
+    /* ---------------- 화면 전환 ---------------- */
+
+    private void showSettings(boolean show) {
+        settingsView.setVisibility(show ? View.VISIBLE : View.GONE);
+        mainView.setVisibility(show ? View.GONE : View.VISIBLE);
+        settingsBtn.setVisibility(show ? View.GONE : View.VISIBLE);
+        if (show) refreshPermStatus();
+    }
+
+    @Override
+    @SuppressWarnings("deprecation")
+    public void onBackPressed() {
+        if (settingsView.getVisibility() == View.VISIBLE) showSettings(false);
+        else super.onBackPressed();
     }
 
     /* ---------------- 알림 ---------------- */
